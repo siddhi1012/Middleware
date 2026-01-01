@@ -7,23 +7,39 @@ const app = express();
 //     next();
 // });
 
-app.use((req,res,next) =>{
-    req.time = new Date (Date.now());
-    console.log(req.method, req.hostname,req.path,req.time);
-    next();
+// app.use((req,res,next) =>{
+//     req.time = new Date (Date.now());
+//     console.log(req.method, req.hostname,req.path,req.time);
+//     next();
 
+// });
+
+//middelware 
+app.use("/api",(req,res,next) =>{
+    let {token} = req.query;
+    if(token === "giveaccess"){
+        return next();
+    }
+   throw new Error("ACCESS DENIED!!");
+   
 });
 
-app.get("/",(req,res) =>{
-    res.send("Hi, I am Root");
-})
+// app.get("/wrong" ,(req,res) ={
+//     abc = abc
+// })
 
+app.get("/api",(req,res) =>{
+    res.send("data");
+});
 
-//middleware -> response send
-app.get("/random",(req,res) =>{
-    res.send("this is random page");
-})
+// app.get("/",(req,res) =>{
+//     res.send("Hi, I am Root");
+// });
 
+// //middleware -> response send
+// app.get("/random",(req,res) =>{
+//     res.send("this is random page");
+// })
 
 
 app.listen("8080",(req,res) =>{
