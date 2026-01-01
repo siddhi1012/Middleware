@@ -1,10 +1,17 @@
 const express = require("express"); 
 const app = express();
 
-app.use((req,res,next) =>{
+// app.use((req,res,next) =>{
     
-    console.log("Hi, I am middleware");
+//     console.log("Hi, I am middleware");
+//     next();
+// });
+
+app.use((req,res,next) =>{
+    req.time = new Date (Date.now());
+    console.log(req.method, req.hostname,req.path,req.time);
     next();
+
 });
 
 app.get("/",(req,res) =>{
